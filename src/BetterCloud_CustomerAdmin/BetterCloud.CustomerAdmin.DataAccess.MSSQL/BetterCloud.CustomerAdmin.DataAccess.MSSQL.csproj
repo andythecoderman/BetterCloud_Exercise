@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{841882FD-2B71-40A3-93A0-1043A55271B9}</ProjectGuid>
+    <ProjectGuid>{80062F20-A8E6-4CCC-9578-1F7DE6843143}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BetterCloud.CustomerAdmin.Common</RootNamespace>
-    <AssemblyName>BetterCloud.CustomerAdmin.Common</AssemblyName>
+    <RootNamespace>BetterCloud.CustomerAdmin.DataAccess.MSSQL</RootNamespace>
+    <AssemblyName>BetterCloud.CustomerAdmin.DataAccess.MSSQL</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,13 +39,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
-    <Compile Include="DataObjects\CustomerDO.cs" />
-    <Compile Include="DataObjects\DataObject.cs" />
-    <Compile Include="Interfaces\Business\ICustomerBusiness.cs" />
-    <Compile Include="Interfaces\DataAccess\ICustomerData.cs" />
-    <Compile Include="Interfaces\DataAccess\IGeocoding.cs" />
+    <Compile Include="CustomerDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BetterCloud.CustomerAdmin.Common\BetterCloud.CustomerAdmin.Common.csproj">
+      <Project>{841882fd-2b71-40a3-93a0-1043a55271b9}</Project>
+      <Name>BetterCloud.CustomerAdmin.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

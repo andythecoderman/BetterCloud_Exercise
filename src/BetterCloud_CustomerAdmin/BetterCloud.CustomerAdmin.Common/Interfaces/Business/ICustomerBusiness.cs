@@ -9,7 +9,7 @@ namespace BetterCloud.CustomerAdmin.Common.Interfaces.Business
     /// <summary>
     /// Interface for all Business Objects that perform operations on Customer Information
     /// </summary>
-    public interface ICustomerBusiness
+    public interface ICustomerBusiness : IDisposable
     {
 
     }

@@ -40,8 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="DataObjects\AddressDO.cs" />
     <Compile Include="DataObjects\CustomerDO.cs" />
     <Compile Include="DataObjects\DataObject.cs" />
+    <Compile Include="DataObjects\GenderTypes.cs" />
     <Compile Include="Interfaces\Business\ICustomerBusiness.cs" />
     <Compile Include="Interfaces\DataAccess\ICustomerData.cs" />
     <Compile Include="Interfaces\DataAccess\IGeocoding.cs" />

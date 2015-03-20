@@ -9,6 +9,15 @@ namespace BetterCloud.CustomerAdmin.Common.DataObjects
     {
         private string _gender = GenderTypes.Unspecified;
 
+        /// <summary>
+        /// Look up ID used for exact match searches. Portable across systems
+        /// </summary>
+        public Guid? CustomerId { get; set; }
+
+        public string Email { get; set; }
+
+        public string Phone { get; set; }
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }

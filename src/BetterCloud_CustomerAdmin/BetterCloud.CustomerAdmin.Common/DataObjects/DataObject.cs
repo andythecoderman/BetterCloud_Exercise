@@ -7,6 +7,6 @@ namespace BetterCloud.CustomerAdmin.Common.DataObjects
     /// </summary>
     public abstract class DataObject
     {
-        public virtual Guid? Id { get; set; }
+        public virtual long? Id { get; set; }
     }
 }

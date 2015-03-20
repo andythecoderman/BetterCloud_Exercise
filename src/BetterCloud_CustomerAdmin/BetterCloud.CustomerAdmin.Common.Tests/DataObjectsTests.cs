@@ -14,6 +14,9 @@ namespace BetterCloud.CustomerAdmin.Common.Tests
             {
                 var customer = new CustomerDO();
                 Assert.IsNull(customer.Id);
+                Assert.IsNull(customer.CustomerId);
+                Assert.IsNull(customer.Email);
+                Assert.IsNull(customer.Phone);
                 Assert.IsNull(customer.Address);
                 Assert.IsNull(customer.DOB);
                 Assert.IsNull(customer.FirstName);

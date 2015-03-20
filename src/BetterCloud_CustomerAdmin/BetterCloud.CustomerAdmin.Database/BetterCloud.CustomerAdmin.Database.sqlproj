@@ -64,6 +64,10 @@
     <Build Include="Address.sql" />
     <Build Include="FK_Customer_Address.sql" />
     <Build Include="spCustomerCreate.sql" />
+    <Build Include="spCustomerUpdate.sql" />
+    <Build Include="spCustomerGetByCustomerId.sql" />
+    <Build Include="spCustomerGetAll.sql" />
+    <Build Include="spCustomerDelete.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BetterCloud.CustomerAdmin.Database.refactorlog" />

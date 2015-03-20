@@ -13,11 +13,12 @@ namespace BetterCloud.CustomerAdmin.Common.Tests
             try
             {
                 var customer = new CustomerDO();
-                Assert.AreEqual(GenderTypes.Unspecified, customer.Gender);
+                Assert.IsNull(customer.Id);
                 Assert.IsNull(customer.Address);
                 Assert.IsNull(customer.DOB);
-                Assert.AreEqual(string.Empty, customer.FirstName);
-                Assert.AreEqual(string.Empty, customer.LastName);
+                Assert.IsNull(customer.FirstName);
+                Assert.IsNull(customer.LastName);
+                Assert.AreEqual(GenderTypes.Unspecified, customer.Gender);
             }
             catch (AssertFailedException)
             {
@@ -29,6 +30,30 @@ namespace BetterCloud.CustomerAdmin.Common.Tests
             }
         }
 
-        
+        [TestMethod]
+        public void CreateAddress_Default()
+        {
+            try
+            {
+                var addr = new AddressDO();
+                Assert.IsNull(addr.Id);
+                Assert.IsNull(addr.Street);
+                Assert.IsNull(addr.City);
+                Assert.IsNull(addr.State);
+                Assert.IsNull(addr.PostalCode);
+                Assert.IsNull(addr.Country);
+                Assert.IsNull(addr.Suite);
+                Assert.IsNull(addr.Latitude);
+                Assert.IsNull(addr.Longitude);
+            }
+            catch (AssertFailedException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
     }
 }

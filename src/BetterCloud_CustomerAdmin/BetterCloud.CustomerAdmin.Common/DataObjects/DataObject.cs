@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BetterCloud.CustomerAdmin.Common.DataObjects
 {
@@ -11,5 +7,6 @@ namespace BetterCloud.CustomerAdmin.Common.DataObjects
     /// </summary>
     public abstract class DataObject
     {
+        public virtual long? Id { get; set; }
     }
 }

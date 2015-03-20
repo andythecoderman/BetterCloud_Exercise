@@ -63,5 +63,12 @@
     <Build Include="Customer.sql" />
     <Build Include="Address.sql" />
     <Build Include="FK_Customer_Address.sql" />
+    <Build Include="spCustomerCreate.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="BetterCloud.CustomerAdmin.Database.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BetterCloud.CustomerAdmin.Database.publish.xml" />
   </ItemGroup>
 </Project>

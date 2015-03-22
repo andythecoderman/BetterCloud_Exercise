@@ -58,21 +58,25 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="StoredProcedures" />
+    <Folder Include="Schema" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Customer.sql" />
-    <Build Include="Address.sql" />
-    <Build Include="FK_Customer_Address.sql" />
-    <Build Include="spCustomerCreate.sql" />
-    <Build Include="spCustomerUpdate.sql" />
-    <Build Include="spCustomerGetByCustomerId.sql" />
-    <Build Include="spCustomerGetAll.sql" />
-    <Build Include="spCustomerDelete.sql" />
+    <Build Include="StoredProcedures\spCustomerCreate.sql" />
+    <Build Include="StoredProcedures\spCustomerDelete.sql" />
+    <Build Include="StoredProcedures\spCustomerGetAll.sql" />
+    <Build Include="StoredProcedures\spCustomerGetByCustomerId.sql" />
+    <Build Include="StoredProcedures\spCustomerUpdate.sql" />
+    <Build Include="Schema\Customer.sql" />
+    <Build Include="Schema\FK_Customer_Address.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BetterCloud.CustomerAdmin.Database.refactorlog" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BetterCloud.CustomerAdmin.Database.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Schema\Address.sql" />
   </ItemGroup>
 </Project>

@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -62,6 +65,13 @@
       <Project>{841882fd-2b71-40a3-93a0-1043a55271b9}</Project>
       <Name>BetterCloud.CustomerAdmin.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BetterCloud.CustomerAdmin.DataAccess.MSSQL\BetterCloud.CustomerAdmin.DataAccess.MSSQL.csproj">
+      <Project>{80062f20-a8e6-4ccc-9578-1f7de6843143}</Project>
+      <Name>BetterCloud.CustomerAdmin.DataAccess.MSSQL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

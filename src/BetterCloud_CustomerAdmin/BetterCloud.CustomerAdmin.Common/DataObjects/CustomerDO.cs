@@ -8,6 +8,7 @@ namespace BetterCloud.CustomerAdmin.Common.DataObjects
     public class CustomerDO : DataObject
     {
         private string _gender = GenderTypes.Unspecified;
+        private AddressDO _address = new AddressDO();
 
         /// <summary>
         /// Look up ID used for exact match searches. Portable across systems
@@ -22,7 +23,11 @@ namespace BetterCloud.CustomerAdmin.Common.DataObjects
 
         public string LastName { get; set; }
 
-        public AddressDO Address { get; set; }
+        public AddressDO Address
+        {
+            get { return _address; }
+            set { _address = value; }
+        }
 
         public DateTime? DOB { get; set; }
 

@@ -27,7 +27,8 @@ namespace BetterCloud.CustomerAdmin.Web.Controllers
         // GET: Customer/Create
         public ActionResult Create()
         {
-            return View();
+            var model = new CustomerModel();
+            return View(model.CreateInitCustomer());
         }
 
         // POST: Customer/Create

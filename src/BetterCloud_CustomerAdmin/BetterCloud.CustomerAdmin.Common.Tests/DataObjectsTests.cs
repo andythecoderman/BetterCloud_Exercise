@@ -17,11 +17,20 @@ namespace BetterCloud.CustomerAdmin.Common.Tests
                 Assert.IsNull(customer.CustomerId);
                 Assert.IsNull(customer.Email);
                 Assert.IsNull(customer.Phone);
-                Assert.IsNull(customer.Address);
                 Assert.IsNull(customer.DOB);
                 Assert.IsNull(customer.FirstName);
                 Assert.IsNull(customer.LastName);
                 Assert.AreEqual(GenderTypes.Unspecified, customer.Gender);
+                
+                Assert.IsNotNull(customer.Address);
+                Assert.IsNull(customer.Address.Street);
+                Assert.IsNull(customer.Address.City);
+                Assert.IsNull(customer.Address.State);
+                Assert.IsNull(customer.Address.PostalCode);
+                Assert.IsNull(customer.Address.Country);
+                Assert.IsNull(customer.Address.Suite);
+                Assert.IsNull(customer.Address.Longitude);
+                Assert.IsNull(customer.Address.Latitude);
             }
             catch (AssertFailedException)
             {

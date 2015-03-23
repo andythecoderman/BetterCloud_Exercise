@@ -14,6 +14,8 @@ namespace BetterCloud.CustomerAdmin.Common.DataObjects
 
         public static string GetGenderType(string value)
         {
+            if(value == null) return Unspecified;
+
             //- Gives some fault tolerance when proper value is not used. 
             var val = value.ToUpper().Trim();
             switch (val)

@@ -34,14 +34,14 @@ namespace BetterCloud.CustomerAdmin.Business.Test.Mocks
         {
             return new CustomerDO()
             {
-                CustomerId = new Guid()
+                CustomerId = customerId
                 //TODO: Add more details
             };
         }
 
         public Guid CreateCustomer(CustomerDO customerDO)
         {
-            return new Guid();
+            return customerDO.CustomerId.GetValueOrDefault();
         }
 
         public bool UpdateCustomer(CustomerDO customerDO)

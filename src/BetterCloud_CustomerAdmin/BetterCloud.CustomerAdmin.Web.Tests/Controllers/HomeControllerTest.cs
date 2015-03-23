@@ -35,7 +35,7 @@ namespace BetterCloud.CustomerAdmin.Web.Tests.Controllers
             ViewResult result = controller.About() as ViewResult;
 
             // Assert
-           Assert.IsNull(result);
+           Assert.IsNotNull(result);
         }
 
         [TestMethod]

@@ -69,9 +69,10 @@ namespace BetterCloud.CustomerAdmin.Business.Test
             try
             {
                 var cuBiz = Kernel.Instance.GetInstance<ICustomerBusiness>();
-                var custDO = new CustomerDO();
+                var custDO = MockData.CreateCustomerDO();
                 var custId = cuBiz.CreateCustomer(custDO);
                 Assert.IsNotNull(custId);
+                Assert.AreEqual(custDO.CustomerId, custId);
             }
             catch (AssertFailedException)
             {
@@ -89,7 +90,7 @@ namespace BetterCloud.CustomerAdmin.Business.Test
             try
             {
                 var cuBiz = Kernel.Instance.GetInstance<ICustomerBusiness>();
-                var custDO = new CustomerDO();
+                var custDO = MockData.CreateCustomerDO();
                 cuBiz.UpdateCustomer(custDO);
             }
             catch (AssertFailedException)
@@ -108,7 +109,8 @@ namespace BetterCloud.CustomerAdmin.Business.Test
             try
             {
                 var cuBiz = Kernel.Instance.GetInstance<ICustomerBusiness>();
-                cuBiz.DeleteCustomer(new Guid());
+                var custDO = MockData.CreateCustomerDO();
+                cuBiz.DeleteCustomer(custDO.CustomerId.GetValueOrDefault());
             }
             catch (AssertFailedException)
             {

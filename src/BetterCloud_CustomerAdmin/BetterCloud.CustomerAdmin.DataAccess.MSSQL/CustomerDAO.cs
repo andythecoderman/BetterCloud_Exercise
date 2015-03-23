@@ -201,8 +201,8 @@ namespace BetterCloud.CustomerAdmin.DataAccess.MSSQL
                 {
                     City = ParseValue<string>(reader, ColCity),
                     Country = ParseValue<string>(reader, ColCountry),
-                    Latitude = ParseValue<double>(reader, ColLatitude),
-                    Longitude = ParseValue<double>(reader, ColLongitude),
+                    Latitude = ParseValue<double?>(reader, ColLatitude),
+                    Longitude = ParseValue<double?>(reader, ColLongitude),
                     PostalCode = ParseValue<string>(reader, ColPostalCode),
                     State = ParseValue<string>(reader, ColState),
                     Street = ParseValue<string>(reader, ColStreet),

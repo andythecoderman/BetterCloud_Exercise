@@ -8,9 +8,9 @@
 	@Gender char NULL,
 	@Street nvarchar(100) NULL,
 	@City nvarchar(100) NULL,
-	@State char(2) NULL,
+	@State nvarchar(100) NULL,
 	@PostalCode char(10) NULL,
-	@Country char(3) NULL,
+	@Country nvarchar(100) NULL,
 	@Suite nvarchar(20) NULL,
 	@Latitude float NULL,
 	@Longitude float NULL	

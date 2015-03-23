@@ -1,0 +1,108 @@
+﻿@model BetterCloud.CustomerAdmin.Common.DataObjects.CustomerDO
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.Email)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Email)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Phone)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Phone)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.FirstName)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.FirstName)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.LastName)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.LastName)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.DOB)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.DOB)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Gender)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Gender)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Address.Street)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Address.Street)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Address.Suite)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Address.Suite)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Address.City)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Address.City)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Address.State)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Address.State)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Address.PostalCode)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Address.PostalCode)
+    </dd>
+
+    @if (@Model.Address.Latitude != null && @Model.Address.Longitude != null)
+    {
+        <dt>
+            @Html.DisplayNameFor(model => model.Address.Latitude)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address.Latitude)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address.Longitude)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address.Longitude)
+        </dd>
+    }
+</dl>
+

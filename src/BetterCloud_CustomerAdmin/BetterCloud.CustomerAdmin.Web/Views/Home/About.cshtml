@@ -2,6 +2,138 @@
     ViewBag.Title = "About";
 }
 <h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<h3>Assignment Description</h3>
+<ul>
+    <li> Please write an ASP.NET MVC application that allows a user to perform CRUD operations on Customer information on a web page.</li>
+    <li>The application should save the data to a database of your choice.</li>
+    <li>Take the Address Information from the Customer Information and save the Longitude and Latitude using Google's Geocoding API.</li>
+    <li>Use proper architectural layering / patterns.</li>
+    <li>Write the unit / integration tests for each layer.</li>
+    <li>NUGET packages are acceptable but please do not use any frameworks/utilities that you have previously written (unless you can re-write them within the timeframe).</li>
+    <li> Write a little excerpt as to what architectural / layering decisions you made, why you made the decisions, and alternatives you rejected and why.</li>
+</ul>
+<hr/>
+<h3>Architectural Description</h3>
+<p>
+    The Application is broken into a few major components: The MVC Web Application, Business Logic, Data Access, and the Database.
+    Each layer is decoupled by use of dependency injection via Ninject so that each component can be substutided to make maintence easier
+    and to support mocking for unit and integration testing.
+    Each component shares a refrence to a common assembly/project which contians the interfance definitions, shared POCO data objects, and access to the singleton dependency injection kernel.
+</p>
 
-<p>Use this area to provide additional information.</p>
+<h4>Assemblies</h4>
+<ul>
+    <li>
+        BetterCloud.CustomerAdmin.Common
+        <ul>
+            <li>DataObjects - Simple .net objects that contains the data structures passed between layers</li>
+            <li>Interfaces - Contians the component-level interfaces consumable by the system.</li>
+            <li>
+                Kernel - Singleton Dependency Injection provider.
+                <ul>
+                    <li>Allows components to retreive a configurable concerte object for one of the component interfaces</li>
+                    <li>Abstracts underlying Ninject DI provider</li>
+                    <li>
+                        Ninject is full-featured but not as performant as other DI frameworks. Abstracting allows for futher reasearch
+                        and potential replacement without affecting dependant code.
+                    </li>
+                </ul>
+            </li>
+            <li>BetterCloud.CustomerAdmin.Common.Test - Unit Test project for Common component</li>
+        </ul>
+    </li>
+
+    <li>
+        BetterCloud.CustomerAdmin.Business
+        <ul>
+            <li>Provides implementation of the Common.Business.ICustomerBusiness interface</li>
+            <li>Contains all business rules and facalitates all operations on Customer data</li>
+            <li>
+                BetterCloud.CustomerAdmin.Busines.Tests
+                <ul>
+                    <li>Provides unit testing for CustomerBusiness</li>
+                    <li>Uses special Kernel configuration to Mock external components to reduce testing to Business functionality only</li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li>
+        BetterCloud.CustomerAdmin.DataAccess.MSSQL
+        <ul>
+            <li>Provides data storage for Customer data using a Microsoft SQL Server Database</li>
+            <li>Other database providers can by substutided by replacing this assembly with another that implements Common.DataAccess.ICustomerData</li>
+            <li>BetterCloud.CustomerAdmin.DataAccess.MSSQL.Tests - Provides Unit Tests for componment</li>
+        </ul>
+    </li>
+    <li>
+        BetterCloud.CustomerAdmin.Database
+        <ul>
+            <li>MSSQL Datbase project for managing the database schema and stored procedures</li>
+            <li>Generates publish scripts to create the Db from Scratch or produce and Update script for changes</li>
+        </ul>
+    </li>
+    <li>
+        BetterCloud.CustomerAdmin.Web
+        <ul>
+            <li>.NET MVC Web Application</li>
+            <li>
+                Uses MVVM Pattern. The controllers respond to route defintions and bind the Views and as in a traditonal MVC archectecture,
+                but uses the Common DataObjects as ViewModles to simplify binding data to Views while the Model handles the transfer of data via the Business Component
+            </li>
+            <li>Built from standard Visual Studio 2013 MVC Application template to save time on UX/UI Creation</li>
+            <li>Assignment functionality build using new Customer contoller, Views, and Model</li>
+            <li>BetterCloud.CustomerAdmin.Web.Tests - Provides Unit Testing for Web project</li>
+        </ul>
+    </li>
+</ul>
+
+<h4>Technologies Used</h4>
+<ul>
+    <li>IDE: Visual Studio 2013 Community Edition</li>
+    <li>
+        Unit Testing Provided by MSTest
+        <ul>
+            <li>Standard Platform with good integration support for Visual Studio</li>
+            <li>Nunit also an option but prefer MSTest for the ease of use</li>
+        </ul>
+    </li>
+    <li>
+        Logging provided by log4net
+        <ul>
+            <li>Industry standard for logging in .net applications</li>
+            <li>Highly customizeable for using diffrent logging methods such a console, file, and other pluggins for logging to databases and other systems</li>
+        </ul>
+    </li>
+    <li>Dependency Injection by Ninject
+        <ul>
+            <li>Popular Opensorce framework</li>
+            <li>Easy to configure and supports many scenarios</li>
+            <li>Not as performant as other IoC's such as AutoFac or Funq</li>
+        </ul>
+    </li>
+    <li>Gecoding.net
+        <ul>NuGet package that wraps calls to Google's API as well as others</ul>
+        <ul>Able to use Common.Kernel to swap providers as needed</ul>
+    </li>
+</ul>
+
+<h4>Other Notes:</h4>
+<ul>
+    <li>
+        Unit Testing - The actual unit tests in this project aren't as complete as I woudl like in a real production application
+        I wanted to provide an example of how I go about creating unit tests and mocking the diffrent layers, but focused on other aspects
+        of the exercise vs. fleshing out all the diffrent cases. Which would include full mocking of data to support both positive and negative
+        results including expected exceptions.
+    </li>
+    <li>
+        Geocoding - I would have liked to have demonstrated a custom implemnation, but chose Geocoding.net for sake of time, and in reality
+        I would have used this package vs creating my own and contributed to the existing project if customizations were required.
+        <br/>
+        My customer version would have made the service call via WebRequest and searlized the JSON data into a POCO object using JSON.net
+    </li>
+    <li>
+        Dependency Injection - I have the basic functionaly wrapped, but currenly only works with empty constructors. Ninject supports more options but
+        I didn't feel it nesscary for this example to wrap more featurs such as IParamater to avoid other componetns other than Common being directly dependant on Ninject
+    </li>
+</ul>
+

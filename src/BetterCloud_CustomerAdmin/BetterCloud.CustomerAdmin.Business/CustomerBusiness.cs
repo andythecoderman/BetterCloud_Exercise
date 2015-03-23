@@ -7,7 +7,7 @@ using BetterCloud.CustomerAdmin.Common.DataObjects;
 using BetterCloud.CustomerAdmin.Common.Interfaces.Business;
 using BetterCloud.CustomerAdmin.Common.Interfaces.DataAccess;
 using Geocoding;
-using Geocoding.Google;
+using log4net;
 
 namespace BetterCloud.CustomerAdmin.Business
 {
@@ -18,7 +18,7 @@ namespace BetterCloud.CustomerAdmin.Business
     {
         #region Fields
         private readonly ICustomerData _customerDAO = Kernel.Instance.GetInstance<ICustomerData>();
-        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private const string MethodLogFormat = "{0} Called"; 
         #endregion
 
@@ -73,7 +73,7 @@ namespace BetterCloud.CustomerAdmin.Business
             try
             {
                 Log.Info(string.Format(MethodLogFormat, MethodBase.GetCurrentMethod().Name));
-
+                Validate(customerDO);
                 SetCoordinates(customerDO);
 
                 var customerId = _customerDAO.CreateCustomer(customerDO);
@@ -86,6 +86,15 @@ namespace BetterCloud.CustomerAdmin.Business
                 var newEx = new Exception("Could not Create Customer", ex);
                 Log.Error(newEx);
                 throw newEx;
+            }
+        }
+
+        private void Validate(CustomerDO customerDO)
+        {
+            if (customerDO == null) throw new ArgumentNullException("customerDO");
+            if (string.IsNullOrEmpty(customerDO.Email))
+            {
+                throw new ArgumentException("Email is Required");
             }
         }
 

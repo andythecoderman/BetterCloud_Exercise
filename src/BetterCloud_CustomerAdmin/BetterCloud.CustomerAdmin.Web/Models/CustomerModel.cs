@@ -58,11 +58,12 @@ namespace BetterCloud.CustomerAdmin.Web.Models
                 FirstName = formData["FirstName"],
                 LastName = formData["LastName"],
                 Email = formData["Email"],
-                Phone = formData["Phone"]
+                Phone = formData["Phone"],
+                Gender = formData["Gender"]
             };
 
             DateTime dt;
-            if (DateTime.TryParse(formData["DOB"], out dt))
+            if (DateTime.TryParse(formData["DOB"].Split(',')[0], out dt))
             {
                 custDO.DOB = dt;
             }

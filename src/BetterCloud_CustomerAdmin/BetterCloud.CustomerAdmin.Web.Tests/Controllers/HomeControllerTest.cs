@@ -35,7 +35,7 @@ namespace BetterCloud.CustomerAdmin.Web.Tests.Controllers
             ViewResult result = controller.About() as ViewResult;
 
             // Assert
-            Assert.AreEqual("Your application description page.", result.ViewBag.Message);
+           Assert.IsNull(result);
         }
 
         [TestMethod]

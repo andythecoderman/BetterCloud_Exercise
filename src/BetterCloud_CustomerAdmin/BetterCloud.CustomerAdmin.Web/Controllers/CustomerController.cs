@@ -1,34 +1,67 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Reflection;
 using System.Web.Mvc;
 using BetterCloud.CustomerAdmin.Web.Models;
+using log4net;
 
 namespace BetterCloud.CustomerAdmin.Web.Controllers
 {
     public class CustomerController : Controller
     {
+
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private const string MethodLogFormat = "{0} Called"; 
+
         // GET: Customer
         public ActionResult Index()
         {
-            CustomerModel model = new CustomerModel();
-            return View(model.GetCustomers());
+            try
+            {
+                Log.Info(string.Format(MethodLogFormat, MethodBase.GetCurrentMethod().Name));
+
+                var model = new CustomerModel();
+                return View(model.GetCustomers());
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return View("Error");
+            }
         }
 
         // GET: Customer/Details/5
         public ActionResult Details(string customerId)
         {
-            var model = new CustomerModel();
+            try
+            {
+                Log.Info(string.Format(MethodLogFormat, MethodBase.GetCurrentMethod().Name));
 
-            return View(model.LoadCustomerById(customerId));
+                var model = new CustomerModel();
+
+                return View(model.LoadCustomerById(customerId));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return View("Error");
+            }
         }
 
         // GET: Customer/Create
         public ActionResult Create()
         {
-            var model = new CustomerModel();
-            return View(model.CreateInitCustomer());
+            try
+            {
+                Log.Info(string.Format(MethodLogFormat, MethodBase.GetCurrentMethod().Name));
+
+                var model = new CustomerModel();
+                return View(model.CreateInitCustomer());
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return View("Error");
+            }
         }
 
         // POST: Customer/Create
@@ -37,23 +70,36 @@ namespace BetterCloud.CustomerAdmin.Web.Controllers
         {
             try
             {
+                Log.Info(string.Format(MethodLogFormat, MethodBase.GetCurrentMethod().Name));
+                if (!ModelState.IsValid) return View();
+
                 var model = new CustomerModel();
                 model.CreateCustomer(collection);
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                Log.Error(ex);
+                return View("Error");
             }
         }
 
         // GET: Customer/Edit/5
         public ActionResult Edit(string customerId)
         {
-            var model = new CustomerModel();
+            try
+            {
+                Log.Info(string.Format(MethodLogFormat, MethodBase.GetCurrentMethod().Name));
+                var model = new CustomerModel();
 
-            return View(model.LoadCustomerById(customerId));
+                return View(model.LoadCustomerById(customerId)); ;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return View("Error");
+            }
         }
 
         // POST: Customer/Edit/5
@@ -62,24 +108,33 @@ namespace BetterCloud.CustomerAdmin.Web.Controllers
         {
             try
             {
+                if (!ModelState.IsValid) return View();
+
                 var model = new CustomerModel();
                 model.UpdateCustomer(customerId, collection);
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                Log.Error(ex);
+                return View("Error");
             }
         }
 
         // GET: Customer/Delete/5
         public ActionResult Delete(string customerId)
         {
-            var model = new CustomerModel();
-
-            return View(model.LoadCustomerById(customerId));
-           
+            try
+            {
+                var model = new CustomerModel();
+                return View(model.LoadCustomerById(customerId));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return View("Error");
+            }
         }
 
         // POST: Customer/Delete/5
@@ -93,9 +148,10 @@ namespace BetterCloud.CustomerAdmin.Web.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                Log.Error(ex);
+                return View("Error");
             }
         }
     }

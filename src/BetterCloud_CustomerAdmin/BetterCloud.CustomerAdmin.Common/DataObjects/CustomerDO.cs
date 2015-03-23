@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace BetterCloud.CustomerAdmin.Common.DataObjects
 {
@@ -15,12 +16,15 @@ namespace BetterCloud.CustomerAdmin.Common.DataObjects
         /// </summary>
         public Guid? CustomerId { get; set; }
 
+        [Required(ErrorMessage = "Email is Required")]
         public string Email { get; set; }
 
         public string Phone { get; set; }
 
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
         public AddressDO Address
@@ -29,6 +33,8 @@ namespace BetterCloud.CustomerAdmin.Common.DataObjects
             set { _address = value; }
         }
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? DOB { get; set; }
 
         public string Gender

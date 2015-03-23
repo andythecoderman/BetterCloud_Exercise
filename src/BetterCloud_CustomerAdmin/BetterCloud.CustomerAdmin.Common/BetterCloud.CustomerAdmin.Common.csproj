@@ -34,6 +34,7 @@
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,14 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
     <Compile Include="DataObjects\AddressDO.cs" />
     <Compile Include="DataObjects\CustomerDO.cs" />
     <Compile Include="DataObjects\DataObject.cs" />
     <Compile Include="DataObjects\GenderTypes.cs" />
     <Compile Include="Interfaces\Business\ICustomerBusiness.cs" />
     <Compile Include="Interfaces\DataAccess\ICustomerData.cs" />
-    <Compile Include="Interfaces\DataAccess\IGeocoding.cs" />
     <Compile Include="Kernel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

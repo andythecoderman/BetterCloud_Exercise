@@ -271,7 +271,8 @@ namespace BetterCloud.CustomerAdmin.DataAccess.MSSQL
                 Email = ParseValue<string>(reader, ColEmail),
                 FirstName = ParseValue<string>(reader, ColFirstName),
                 LastName = ParseValue<string>(reader, ColLastName),
-                Phone = ParseValue<string>(reader, ColPhone)
+                Phone = ParseValue<string>(reader, ColPhone),
+                Gender = ParseValue<string>(reader, ColGender)
             };
 
             //- Add Address if avaliable

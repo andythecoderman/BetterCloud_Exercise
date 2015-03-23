@@ -5,6 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using BetterCloud.CustomerAdmin.Business;
+using BetterCloud.CustomerAdmin.Common;
+using BetterCloud.CustomerAdmin.Common.Interfaces.Business;
+using BetterCloud.CustomerAdmin.Common.Interfaces.DataAccess;
+using BetterCloud.CustomerAdmin.DataAccess.MSSQL;
 
 namespace BetterCloud.CustomerAdmin.Web
 {
@@ -12,6 +17,9 @@ namespace BetterCloud.CustomerAdmin.Web
     {
         protected void Application_Start()
         {
+            Kernel.Instance.Bind<ICustomerBusiness, CustomerBusiness>();
+            Kernel.Instance.Bind<ICustomerData, CustomerDAO>();
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

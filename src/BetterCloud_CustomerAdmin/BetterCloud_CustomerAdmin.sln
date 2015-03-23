@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCloud.CustomerAdmin.C
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "BetterCloud.CustomerAdmin.Database", "BetterCloud.CustomerAdmin.Database\BetterCloud.CustomerAdmin.Database.sqlproj", "{0B25AC45-B51C-4454-BDE7-D53E8FE528A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCloud.CustomerAdmin.DataAccess.MSSQL.Tests", "BetterCloud.CustomerAdmin.DataAccess.MSSQL.Tests\BetterCloud.CustomerAdmin.DataAccess.MSSQL.Tests.csproj", "{71823029-DE44-4747-B0C8-234EA95572E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{0B25AC45-B51C-4454-BDE7-D53E8FE528A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B25AC45-B51C-4454-BDE7-D53E8FE528A2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0B25AC45-B51C-4454-BDE7-D53E8FE528A2}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{71823029-DE44-4747-B0C8-234EA95572E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71823029-DE44-4747-B0C8-234EA95572E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71823029-DE44-4747-B0C8-234EA95572E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71823029-DE44-4747-B0C8-234EA95572E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

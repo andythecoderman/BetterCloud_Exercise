@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="BetterCloud.CustomerAdmin.Database.publish.xml" />
+    <None Include="BetterCloud_1.CustomerAdmin.Database.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schema\Address.sql" />

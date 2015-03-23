@@ -69,6 +69,8 @@ namespace BetterCloud.CustomerAdmin.DataAccess.MSSQL
                 {
                     CommandType = CommandType.StoredProcedure
                 };
+                command.Parameters.AddWithValue("@" + ColCustomerId, customerId);
+
                 conn.Open();
                 var reader = command.ExecuteReader();
 
@@ -88,14 +90,23 @@ namespace BetterCloud.CustomerAdmin.DataAccess.MSSQL
             Guid newCustId;
             using (var conn = new SqlConnection(ConnectionString))
             {
-                var command = new SqlCommand(SpCustomerCreate, conn)
+                try
                 {
-                    CommandType = CommandType.StoredProcedure
-                };
-                var outParam = BuildCustomerParams(customerDO, command, true);
-                conn.Open();
-                command.ExecuteNonQuery();
-                newCustId = (Guid) outParam.Value; 
+                    var command = new SqlCommand(SpCustomerCreate, conn)
+                           {
+                               CommandType = CommandType.StoredProcedure
+
+                           };
+                    var outParam = BuildCustomerParams(customerDO, command, true);
+                    conn.Open();
+                    command.ExecuteNonQuery();
+                    newCustId = (Guid)outParam.Value;
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(ex);
+                    throw;
+                }
             }
             return newCustId;
         }
@@ -120,7 +131,8 @@ namespace BetterCloud.CustomerAdmin.DataAccess.MSSQL
             {
                 var command = new SqlCommand(SpCustomerDelete, conn)
                 {
-                    CommandType = CommandType.StoredProcedure
+                    CommandType = CommandType.StoredProcedure,
+                    CommandTimeout = 10
                 };
                 command.Parameters.Add(new SqlParameter(ColCustomerId, customerId));
                 conn.Open();
@@ -136,30 +148,35 @@ namespace BetterCloud.CustomerAdmin.DataAccess.MSSQL
 
         private static SqlParameter BuildCustomerParams(CustomerDO customerDO, SqlCommand command, bool isCreate = false)
         {
-            var custIdParam = new SqlParameter(ColCustomerId, customerDO.CustomerId);
+            SqlParameter custIdParam = null; 
             if (isCreate)
             {
                 //- Set to recive new Guid on create
-                custIdParam.Direction = ParameterDirection.InputOutput;
+                custIdParam = new SqlParameter(ColCustomerId, SqlDbType.UniqueIdentifier);
+                custIdParam.Direction = ParameterDirection.Output;
+                command.Parameters.Add(custIdParam);
+           }
+            else
+            {
+                command.Parameters.AddWithValue("@" + ColCustomerId, customerDO.CustomerId ?? (object)DBNull.Value);
             }
-            command.Parameters.Add(custIdParam);
-            command.Parameters.Add(new SqlParameter(ColDOB, customerDO.DOB));
-            command.Parameters.Add(new SqlParameter(ColEmail, customerDO.Email));
-            command.Parameters.Add(new SqlParameter(ColFirstName, customerDO.FirstName));
-            command.Parameters.Add(new SqlParameter(ColGender, customerDO.Gender));
-            command.Parameters.Add(new SqlParameter(ColLastName, customerDO.LastName));
-            command.Parameters.Add(new SqlParameter(ColPhone, customerDO.Phone));
 
-            if (customerDO.Address == null) return custIdParam;
-
-            command.Parameters.Add(new SqlParameter(ColCity, customerDO.Address.City));
-            command.Parameters.Add(new SqlParameter(ColCountry, customerDO.Address.Country));
-            command.Parameters.Add(new SqlParameter(ColLatitude, customerDO.Address.Latitude));
-            command.Parameters.Add(new SqlParameter(ColLongitude, customerDO.Address.Longitude));
-            command.Parameters.Add(new SqlParameter(ColPostalCode, customerDO.Address.PostalCode));
-            command.Parameters.Add(new SqlParameter(ColState, customerDO.Address.State));
-            command.Parameters.Add(new SqlParameter(ColStreet, customerDO.Address.Street));
-            command.Parameters.Add(new SqlParameter(ColSuite, customerDO.Address.Suite));
+            if (customerDO.Address == null) customerDO.Address = new AddressDO();
+            command.Parameters.AddWithValue("@" + ColEmail, customerDO.Email ?? (object) DBNull.Value);
+            command.Parameters.AddWithValue("@" + ColPhone, customerDO.Phone ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@" + ColFirstName, customerDO.FirstName ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@" + ColLastName, customerDO.LastName ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@" + ColDOB, customerDO.DOB ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@" + ColGender, customerDO.Gender ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@" + ColStreet, customerDO.Address.Street ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@" + ColCity, customerDO.Address.City ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@" + ColState, customerDO.Address.State ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@" + ColPostalCode, customerDO.Address.PostalCode ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@" + ColCountry, customerDO.Address.Country ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@" + ColSuite, customerDO.Address.Suite ?? (object) DBNull.Value);
+            command.Parameters.AddWithValue("@" + ColLatitude, customerDO.Address.Latitude ?? (object) DBNull.Value);
+            command.Parameters.AddWithValue("@" + ColLongitude, customerDO.Address.Longitude ?? (object) DBNull.Value);
+            
 
             return custIdParam;
         }

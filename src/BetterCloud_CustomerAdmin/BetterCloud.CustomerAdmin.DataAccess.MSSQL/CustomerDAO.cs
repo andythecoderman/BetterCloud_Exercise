@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Reflection;
 using BetterCloud.CustomerAdmin.Common.DataObjects;
 using BetterCloud.CustomerAdmin.Common.Interfaces.DataAccess;
 
@@ -10,6 +11,8 @@ namespace BetterCloud.CustomerAdmin.DataAccess.MSSQL
 {
     public class CustomerDAO : ICustomerData
     {
+        #region Fields
+
         #region Column Definitions
 
         private const string CustomerDbConnection = "CustomerDBConnection";
@@ -37,132 +40,210 @@ namespace BetterCloud.CustomerAdmin.DataAccess.MSSQL
 
         #endregion
 
-        private static readonly string ConnectionString =
-            ConfigurationManager.ConnectionStrings[CustomerDbConnection].ConnectionString;
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private const string MethodLogFormat = "{0} Called";
 
+        private readonly string _connectionString;
+            
 
+        #endregion
+
+        #region Constructors
+       
+        public CustomerDAO()
+        {
+            try
+            {
+                _connectionString = ConfigurationManager.ConnectionStrings[CustomerDbConnection].ConnectionString;
+            }
+            catch (Exception ex)
+            {
+                var newEx =
+                    new ConfigurationErrorsException(
+                        "Could not load connectiong string with key " + CustomerDbConnection, ex);
+                Log.Error(newEx);
+                throw newEx;
+            }
+
+        } 
+        
+        #endregion
+
+        #region ICustomerData Implementation Methods
         public List<CustomerDO> GetAllCustomers()
         {
-            var customers = new List<CustomerDO>();
-            
-            using (var conn = new SqlConnection(ConnectionString))
+            try
             {
-                var command = new SqlCommand(SpCustomerGetAll, conn) {CommandType = CommandType.StoredProcedure};
-                conn.Open();
-                var reader = command.ExecuteReader();
+                Log.Info(string.Format(MethodLogFormat, MethodBase.GetCurrentMethod().Name));
 
-                while (reader.Read())
+                var customers = new List<CustomerDO>();
+
+                using (var conn = new SqlConnection(_connectionString))
                 {
-                    customers.Add(BuildCustomer(reader));   
+                    var command = new SqlCommand(SpCustomerGetAll, conn) { CommandType = CommandType.StoredProcedure };
+                    conn.Open();
+                    var reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        customers.Add(BuildCustomer(reader));
+                    }
+                    reader.Close();
                 }
-                reader.Close();
+                Log.Debug(customers);
+                return customers;
             }
-            return customers;
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                throw;
+            }
         }
 
         public CustomerDO GetCustomer(Guid customerId)
         {
-            CustomerDO customer = null;
-            using (var conn = new SqlConnection(ConnectionString))
+            try
             {
-                var command = new SqlCommand(SpCustomerGetByCustomerId, conn)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.AddWithValue("@" + ColCustomerId, customerId);
+                Log.Info(string.Format(MethodLogFormat, MethodBase.GetCurrentMethod().Name));
 
-                conn.Open();
-                var reader = command.ExecuteReader();
-
-                while (reader.Read())
+                CustomerDO customer = null;
+                using (var conn = new SqlConnection(_connectionString))
                 {
-                    //- Should be only one
-                    customer = BuildCustomer(reader);
-                    break;
+                    var command = new SqlCommand(SpCustomerGetByCustomerId, conn)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    command.Parameters.AddWithValue("@" + ColCustomerId, customerId);
+
+                    conn.Open();
+                    var reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        //- Should be only one
+                        customer = BuildCustomer(reader);
+                        break;
+                    }
+                    reader.Close();
                 }
-                reader.Close();
+                Log.Debug(customer);
+                return customer;
             }
-            return customer;
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                throw;
+            }
         }
 
         public Guid CreateCustomer(CustomerDO customerDO)
         {
-            Guid newCustId;
-            using (var conn = new SqlConnection(ConnectionString))
+            try
             {
-                try
-                {
-                    var command = new SqlCommand(SpCustomerCreate, conn)
-                           {
-                               CommandType = CommandType.StoredProcedure
+                Log.Info(string.Format(MethodLogFormat, MethodBase.GetCurrentMethod().Name));
 
-                           };
-                    var outParam = BuildCustomerParams(customerDO, command, true);
-                    conn.Open();
-                    command.ExecuteNonQuery();
-                    newCustId = (Guid)outParam.Value;
-                }
-                catch (Exception ex)
+                Guid newCustId;
+                using (var conn = new SqlConnection(_connectionString))
                 {
-                    Console.Write(ex);
-                    throw;
+                    try
+                    {
+                        var command = new SqlCommand(SpCustomerCreate, conn)
+                               {
+                                   CommandType = CommandType.StoredProcedure
+
+                               };
+                        var outParam = BuildCustomerParams(customerDO, command, true);
+                        conn.Open();
+                        command.ExecuteNonQuery();
+                        newCustId = (Guid)outParam.Value;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.Write(ex);
+                        throw;
+                    }
                 }
+                return newCustId;
             }
-            return newCustId;
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                throw;
+            }
         }
 
         public bool UpdateCustomer(CustomerDO customerDO)
         {
-            using (var conn = new SqlConnection(ConnectionString))
+            try
             {
-                var command = new SqlCommand(SpCustomerUpdate, conn) {CommandType = CommandType.StoredProcedure};
-                BuildCustomerParams(customerDO, command);
-                conn.Open();
-                command.ExecuteNonQuery();
-            }
-            return true;
-        }
+                Log.Info(string.Format(MethodLogFormat, MethodBase.GetCurrentMethod().Name));
 
-        
+                using (var conn = new SqlConnection(_connectionString))
+                {
+                    var command = new SqlCommand(SpCustomerUpdate, conn) { CommandType = CommandType.StoredProcedure };
+                    BuildCustomerParams(customerDO, command);
+                    conn.Open();
+                    command.ExecuteNonQuery();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                throw;
+            }
+        }
 
         public bool DeleteCustomer(Guid customerId)
         {
-            using (var conn = new SqlConnection(ConnectionString))
+            try
             {
-                var command = new SqlCommand(SpCustomerDelete, conn)
+                Log.Info(string.Format(MethodLogFormat, MethodBase.GetCurrentMethod().Name));
+
+                using (var conn = new SqlConnection(_connectionString))
                 {
-                    CommandType = CommandType.StoredProcedure,
-                    CommandTimeout = 10
-                };
-                command.Parameters.Add(new SqlParameter(ColCustomerId, customerId));
-                conn.Open();
-                command.ExecuteNonQuery();
+                    var command = new SqlCommand(SpCustomerDelete, conn)
+                    {
+                        CommandType = CommandType.StoredProcedure,
+                        CommandTimeout = 10
+                    };
+                    command.Parameters.Add(new SqlParameter(ColCustomerId, customerId));
+                    conn.Open();
+                    command.ExecuteNonQuery();
+                }
+                return true;
             }
-            return true; 
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                throw;
+            }
         }
 
         public void Dispose()
         {
             //- Nothing to clean up
-        }
+        } 
+        #endregion
 
+        #region Helper Methods
         private static SqlParameter BuildCustomerParams(CustomerDO customerDO, SqlCommand command, bool isCreate = false)
         {
-            SqlParameter custIdParam = null; 
+            SqlParameter custIdParam = null;
             if (isCreate)
             {
                 //- Set to recive new Guid on create
                 custIdParam = new SqlParameter(ColCustomerId, SqlDbType.UniqueIdentifier);
                 custIdParam.Direction = ParameterDirection.Output;
                 command.Parameters.Add(custIdParam);
-           }
+            }
             else
             {
                 command.Parameters.AddWithValue("@" + ColCustomerId, customerDO.CustomerId ?? (object)DBNull.Value);
             }
 
             if (customerDO.Address == null) customerDO.Address = new AddressDO();
-            command.Parameters.AddWithValue("@" + ColEmail, customerDO.Email ?? (object) DBNull.Value);
+            command.Parameters.AddWithValue("@" + ColEmail, customerDO.Email ?? (object)DBNull.Value);
             command.Parameters.AddWithValue("@" + ColPhone, customerDO.Phone ?? (object)DBNull.Value);
             command.Parameters.AddWithValue("@" + ColFirstName, customerDO.FirstName ?? (object)DBNull.Value);
             command.Parameters.AddWithValue("@" + ColLastName, customerDO.LastName ?? (object)DBNull.Value);
@@ -173,10 +254,10 @@ namespace BetterCloud.CustomerAdmin.DataAccess.MSSQL
             command.Parameters.AddWithValue("@" + ColState, customerDO.Address.State ?? (object)DBNull.Value);
             command.Parameters.AddWithValue("@" + ColPostalCode, customerDO.Address.PostalCode ?? (object)DBNull.Value);
             command.Parameters.AddWithValue("@" + ColCountry, customerDO.Address.Country ?? (object)DBNull.Value);
-            command.Parameters.AddWithValue("@" + ColSuite, customerDO.Address.Suite ?? (object) DBNull.Value);
-            command.Parameters.AddWithValue("@" + ColLatitude, customerDO.Address.Latitude ?? (object) DBNull.Value);
-            command.Parameters.AddWithValue("@" + ColLongitude, customerDO.Address.Longitude ?? (object) DBNull.Value);
-            
+            command.Parameters.AddWithValue("@" + ColSuite, customerDO.Address.Suite ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@" + ColLatitude, customerDO.Address.Latitude ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@" + ColLongitude, customerDO.Address.Longitude ?? (object)DBNull.Value);
+
 
             return custIdParam;
         }
@@ -220,6 +301,7 @@ namespace BetterCloud.CustomerAdmin.DataAccess.MSSQL
                 result = (T)reader.GetValue(reader.GetOrdinal(column));
 
             return result;
-        }
+        } 
+        #endregion
     }
 }

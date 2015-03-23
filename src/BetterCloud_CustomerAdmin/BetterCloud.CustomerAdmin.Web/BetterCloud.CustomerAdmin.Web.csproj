@@ -111,10 +111,12 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -153,10 +155,14 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Customer\Create.cshtml" />
+    <Content Include="Views\Customer\Edit.cshtml" />
+    <Content Include="Views\Customer\Details.cshtml" />
+    <Content Include="Views\Customer\Delete.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -164,6 +170,24 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BetterCloud.CustomerAdmin.Business\BetterCloud.CustomerAdmin.Business.csproj">
+      <Project>{095988f4-694c-4906-b9e2-b8c84f6b6764}</Project>
+      <Name>BetterCloud.CustomerAdmin.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetterCloud.CustomerAdmin.Common\BetterCloud.CustomerAdmin.Common.csproj">
+      <Project>{841882fd-2b71-40a3-93a0-1043a55271b9}</Project>
+      <Name>BetterCloud.CustomerAdmin.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetterCloud.CustomerAdmin.DataAccess.MSSQL\BetterCloud.CustomerAdmin.DataAccess.MSSQL.csproj">
+      <Project>{80062f20-a8e6-4ccc-9578-1f7de6843143}</Project>
+      <Name>BetterCloud.CustomerAdmin.DataAccess.MSSQL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetterCloud.Geocoding.Google\BetterCloud.Geocoding.Google.csproj">
+      <Project>{759fea7e-f365-4b97-aa93-d71cd5df15cc}</Project>
+      <Name>BetterCloud.Geocoding.Google</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

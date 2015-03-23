@@ -13,10 +13,9 @@
 	@Country char(3),
 	@Suite nvarchar(20),
 	@Latitude float,
-	@Longitude float,
-	@AddrId int
+	@Longitude float	
 AS
-
+DECLARE @AddrId int
 BEGIN TRANSACTION "Create_Customer"
 BEGIN TRY
 	SELECT @AddrId = AddressId 

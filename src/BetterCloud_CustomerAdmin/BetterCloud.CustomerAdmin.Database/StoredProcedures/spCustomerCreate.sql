@@ -1,23 +1,24 @@
 ﻿CREATE PROCEDURE [dbo].[spCustomerCreate]
 	@CustomerId uniqueidentifier OUTPUT,
-	@Email nvarchar(100),
-	@Phone nvarchar(20),
-	@FirstName nvarchar(100),
-	@LastName nvarchar(100),
-	@DOB datetime,
-	@Gender char,
-	@Street nvarchar(100),
-	@City nvarchar(100),
-	@State char(2),
-	@PostalCode char(10),
-	@Country char(3),
-	@Suite nvarchar(20),
-	@Latitude float,
-	@Longitude float,
-	@AddrId int
+	@Email nvarchar(100) NULL,
+	@Phone nvarchar(20) NULL,
+	@FirstName nvarchar(100) NULL,
+	@LastName nvarchar(100) NULL,
+	@DOB datetime NULL,
+	@Gender char NULL,
+	@Street nvarchar(100) NULL,
+	@City nvarchar(100) NULL,
+	@State char(2) NULL,
+	@PostalCode char(10) NULL,
+	@Country char(3) NULL,
+	@Suite nvarchar(20) NULL,
+	@Latitude float NULL,
+	@Longitude float NULL	
 AS
 
 IF @CustomerId IS NULL SELECT @CustomerId = NEWID() 
+
+DECLARE @AddrId int
 
 BEGIN TRANSACTION "Create_Customer"
 BEGIN TRY

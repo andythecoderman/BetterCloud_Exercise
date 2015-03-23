@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using BetterCloud.CustomerAdmin.Common;
 using BetterCloud.CustomerAdmin.Common.DataObjects;
 using BetterCloud.CustomerAdmin.Common.Interfaces.Business;
+using BetterCloud.CustomerAdmin.Common.Interfaces.DataAccess;
 
 namespace BetterCloud.CustomerAdmin.Business
 {
@@ -10,33 +12,38 @@ namespace BetterCloud.CustomerAdmin.Business
     /// </summary>
     public class CustomerBusiness : ICustomerBusiness
     {
+        private readonly ICustomerData _customerDAO = Kernel.Instance.GetInstance<ICustomerData>();
+
         public void Dispose()
         {
-            throw new NotImplementedException();
+            if (_customerDAO != null)
+            {
+                _customerDAO.Dispose();
+            }
         }
 
         public List<CustomerDO> GetAllCustomers()
         {
-            throw new NotImplementedException();
+            return _customerDAO.GetAllCustomers();
         }
 
         public CustomerDO GetCustomer(Guid customerId)
         {
-            throw new NotImplementedException();
+            return _customerDAO.GetCustomer(customerId);
         }
 
         public Guid CreateCustomer(CustomerDO customerDO)
         {
-            throw new NotImplementedException();
+            return _customerDAO.CreateCustomer(customerDO);
         }
 
-        void ICustomerBusiness.UpdateCustomer(CustomerDO customerDO)
+        public void UpdateCustomer(CustomerDO customerDO)
         {
-            throw new NotImplementedException();
+            _customerDAO.UpdateCustomer(customerDO);
         }
         public void DeleteCustomer(Guid customerId)
         {
-            throw new NotImplementedException();
+            _customerDAO.DeleteCustomer(customerId);
         }
     }
 }

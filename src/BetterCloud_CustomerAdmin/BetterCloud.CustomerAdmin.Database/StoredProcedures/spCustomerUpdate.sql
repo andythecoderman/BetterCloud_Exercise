@@ -21,7 +21,7 @@ BEGIN TRANSACTION "Create_Customer"
 BEGIN TRY
 	SELECT @AddrId = AddressId 
 	FROM Customer
-	WHERE CustomerID = @CustomerId
+	WHERE CustomerId = @CustomerId
 	IF @AddrId IS NULL 
 	BEGIN 
 		-- Create Address Record for Customer

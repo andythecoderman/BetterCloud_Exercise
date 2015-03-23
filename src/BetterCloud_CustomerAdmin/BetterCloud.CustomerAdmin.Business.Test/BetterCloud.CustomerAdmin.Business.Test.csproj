@@ -54,6 +54,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CustomerBusinessTest.cs" />
+    <Compile Include="Mocks\MockIDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[spCustomerDelete]
-	@CustomerID uniqueidentifier	
+	@CustomerId uniqueidentifier	
 AS
 IF @CustomerId IS NULL SELECT @CustomerId = NEWID() 
 
@@ -9,9 +9,9 @@ DECLARE @AddrId int
 
 SELECT @AddrId = AddressId 
 	FROM Customer
-	WHERE CustomerID = @CustomerId
+	WHERE CustomerId = @CustomerId
 
-DELETE FROM Customer WHERE CustomerId = @CustomerID
+DELETE FROM Customer WHERE CustomerId = @CustomerId
 
 -- Delete Address unles some other Customer is shareing it
 IF @AddrId IS NOT NULL AND NOT EXISTS (SELECT Id FROM Customer WHERE AddressId = @AddrID) 

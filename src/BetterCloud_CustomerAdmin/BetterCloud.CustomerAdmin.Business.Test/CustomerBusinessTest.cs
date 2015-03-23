@@ -4,6 +4,8 @@ using BetterCloud.CustomerAdmin.Common;
 using BetterCloud.CustomerAdmin.Common.DataObjects;
 using BetterCloud.CustomerAdmin.Common.Interfaces.Business;
 using BetterCloud.CustomerAdmin.Common.Interfaces.DataAccess;
+using Geocoding;
+using Geocoding.Google;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BetterCloud.CustomerAdmin.Business.Test
@@ -16,6 +18,7 @@ namespace BetterCloud.CustomerAdmin.Business.Test
         {
             Kernel.Instance.Bind<ICustomerBusiness, CustomerBusiness>();
             Kernel.Instance.Bind<ICustomerData, MockIDataAccess>();
+            Kernel.Instance.Bind<IGeocoder, GoogleGeocoder>();
         }
 
 

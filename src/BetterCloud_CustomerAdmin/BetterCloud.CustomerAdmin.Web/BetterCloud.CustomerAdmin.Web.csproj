@@ -39,6 +39,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Geocoding, Version=3.2.1.0, Culture=neutral, PublicKeyToken=7c714700b88674c7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Geocoding.net.3.2.1\lib\net40\Geocoding.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -161,6 +165,7 @@
     <Content Include="Views\Customer\Delete.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Customer\_CustomerFields.cshtml" />
+    <Content Include="Views\Customer\_CustomerDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -184,10 +189,6 @@
     <ProjectReference Include="..\BetterCloud.CustomerAdmin.DataAccess.MSSQL\BetterCloud.CustomerAdmin.DataAccess.MSSQL.csproj">
       <Project>{80062f20-a8e6-4ccc-9578-1f7de6843143}</Project>
       <Name>BetterCloud.CustomerAdmin.DataAccess.MSSQL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BetterCloud.Geocoding.Google\BetterCloud.Geocoding.Google.csproj">
-      <Project>{759fea7e-f365-4b97-aa93-d71cd5df15cc}</Project>
-      <Name>BetterCloud.Geocoding.Google</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

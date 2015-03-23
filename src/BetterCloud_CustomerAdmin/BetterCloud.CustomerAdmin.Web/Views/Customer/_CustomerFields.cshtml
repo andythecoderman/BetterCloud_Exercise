@@ -1,14 +1,6 @@
 ﻿@model BetterCloud.CustomerAdmin.Common.DataObjects.CustomerDO
            
 <div class="form-group">
-    @Html.LabelFor(model => model.CustomerId, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => model.CustomerId, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
-    </div>
-</div>
-
-<div class="form-group">
     @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
@@ -81,10 +73,25 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Address.PostalCode, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.LabelFor(model => model.Address.PostalCode, htmlAttributes: new {@class = "control-label col-md-2"})
     <div class="col-md-10">
-        @Html.EditorFor(model => model.Address.PostalCode, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Address.PostalCode, "", new { @class = "text-danger" })
+        @Html.EditorFor(model => model.Address.PostalCode, new {htmlAttributes = new {@class = "form-control"}})
+        @Html.ValidationMessageFor(model => model.Address.PostalCode, "", new {@class = "text-danger"})
     </div>
 </div>
+@if (@Model.Address.Latitude != null && @Model.Address.Longitude != null)
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.Address.Latitude, htmlAttributes: new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.Address.Latitude, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
 
+    <div class="form-group">
+        @Html.LabelFor(model => model.Address.Longitude, htmlAttributes: new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.Address.Longitude, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+}

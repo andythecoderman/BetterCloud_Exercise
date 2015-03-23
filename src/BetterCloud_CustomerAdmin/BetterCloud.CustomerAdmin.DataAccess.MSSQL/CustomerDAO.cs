@@ -83,9 +83,9 @@ namespace BetterCloud.CustomerAdmin.DataAccess.MSSQL
             return customer;
         }
 
-        public Guid? CreateCustomer(CustomerDO customerDO)
+        public Guid CreateCustomer(CustomerDO customerDO)
         {
-            Guid? newCustId;
+            Guid newCustId;
             using (var conn = new SqlConnection(ConnectionString))
             {
                 var command = new SqlCommand(SpCustomerCreate, conn)
@@ -95,7 +95,7 @@ namespace BetterCloud.CustomerAdmin.DataAccess.MSSQL
                 var outParam = BuildCustomerParams(customerDO, command, true);
                 conn.Open();
                 command.ExecuteNonQuery();
-                newCustId = outParam.Value is Guid ? new Guid?((Guid) outParam.Value) : null;
+                newCustId = (Guid) outParam.Value; 
             }
             return newCustId;
         }

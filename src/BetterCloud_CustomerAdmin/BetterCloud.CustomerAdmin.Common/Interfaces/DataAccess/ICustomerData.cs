@@ -25,7 +25,7 @@ namespace BetterCloud.CustomerAdmin.Common.Interfaces.DataAccess
         /// </summary>
         /// <param name="customerDO"></param>
         /// <returns></returns>
-        Guid? CreateCustomer(CustomerDO customerDO);
+        Guid CreateCustomer(CustomerDO customerDO);
 
         /// <summary>
         /// Replaces the existing Customer record with the <param name="customerDO"></param> with the matching CustomerId property
